@@ -3,8 +3,8 @@ class Point {
         this.sprite = sprite;
         this.x = x || 0;
         this.y = y || 0;
-        this.w = w;
-        this.h = h;
+        this.w = w || 171;
+        this.h = h || 101;
     }
     update(dt) {
 
@@ -17,17 +17,23 @@ class Point {
 
 class Enemy extends Point {
     constructor(sprite, x, y, w, h) {
-        super(x, y);
+        super(x, y, w, h);
         this.sprite = sprite || 'images/enemy-bug.png';
-        this.w = w || 171;
-        this.h = h || 101;
     }
 }
 
 let enemy = new Enemy();
 var allEnemies = [new Enemy(), new Enemy() , new Enemy()];
 
-console.log(enemy);
+
+class Player extends Point {
+    constructor(sprite, x, y, w, h) {
+        super(x, y, w, h)
+        this.sprite = sprite || 'images/char-boy.png';
+    }
+}
+
+let player = new Player();
 
 
 
