@@ -1,10 +1,12 @@
+
+
 class Point {
     constructor(sprite, x, y, w, h) {
         this.sprite = sprite;
         this.x = x || 0;
         this.y = y || 0;
-        this.w = w || 171;
-        this.h = h || 101;
+        this.w = w || 101;
+        this.h = h || 171;
     }
     update(dt) {
 
@@ -16,37 +18,73 @@ class Point {
 }
 
 class Enemy extends Point {
-    constructor(sprite, x, y, w, h) {
+    constructor(x, y, w, h, sprite) {
         super(x, y, w, h);
         this.sprite = sprite || 'images/enemy-bug.png';
+
     }
 }
 
-let enemy = new Enemy();
-var allEnemies = [new Enemy(), new Enemy() , new Enemy()];
+let enemy1 = new Enemy(undefined, 0, 60);
+let enemy2 = new Enemy(undefined, 0, 143);
+let enemy3 = new Enemy(undefined, 0, 226 );
+
+
+var allEnemies = [enemy1, enemy2 , enemy3];
+
+console.log(enemy1);
 
 
 class Player extends Point {
-    constructor(sprite, x, y, w, h) {
-        super(x, y, w, h)
+    constructor(x, y, w, h, sprite) {
+        super(x, y, w, h);
         this.sprite = sprite || 'images/char-boy.png';
     }
+
+    handleInput(key) {
+
+        if (key == 'right') {
+
+            if (this.x >= 0 && this.x <= (ctx.canvas.width - (this.w * 1.2))) {
+                this.x += (this.w * 0.25);
+            }
+
+        } else if (key == 'left') {
+
+            if (this.x > (this.w * 0.25) && this.x <= (ctx.canvas.width - (this.w * 0.5))) {
+                this.x -= (this.w * 0.25);
+            }
+
+        } else if (key == 'down') {
+
+            if (this.y >= 0 && this.y <= (ctx.canvas.height - (this.h * 1.4))) {
+                this.y += (this.w * 0.25);
+            }
+
+        } else if (key == 'up') {
+
+            if (this.y > 0 && this.y <= (ctx.canvas.height - (this.h * 0.5))) {
+                this.y -= (this.w * 0.25);
+            }
+            if (this.y <= 0) {
+                player.win()
+            }
+        }
+    }
+    win() {
+        console.log("I won!")
+    }
+    
+    
 }
 
-let player = new Player();
+let player = new Player(undefined, 201, 380);
+console.log(player);
 
 
 
 
 
-
-
-
-
-
-
-// This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
     var allowedKeys = {
         37: 'left',
