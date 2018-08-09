@@ -19,6 +19,30 @@ class Point {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
     checkCollisions() {
+
+        // extra numbers are whitespaces on the pictures
+        var left = player.x + 17; 
+        var right = player.x + player.w - 17;
+        var top = player.y + 63;
+        var bottom = player.y + player.h - 30; 
+   
+
+        var rightB = allEnemies[0].x + allEnemies[0].w;
+        var leftB = allEnemies[0].x;
+        var bottomB = allEnemies[0].y + allEnemies[0].h - 30;
+        var topB = allEnemies[0].y + 77;
+
+
+        if (left <= rightB && right <= leftB && top <= bottomB && bottom >= topB) {
+            console.log("hit")
+        }
+
+
+     //   console.log(player.x)
+     //   console.log(allEnemies[0].x)
+
+         
+
       //  console.log(this.x)
     }
 }
@@ -76,9 +100,9 @@ let enemy4 = new Enemy(undefined, undefined, undefined, undefined, undefined);
 let enemy5 = new Enemy(undefined, undefined, undefined, undefined, undefined);
 let enemy6 = new Enemy(undefined, undefined, undefined, undefined, undefined);
 
-
-var allEnemies = [new Enemy, new Enemy, new Enemy, new Enemy, new Enemy, new Enemy]
-//var allEnemies = [enemy, enemy , enemy, enemy, enemy, enemy];
+var allEnemies = [enemy];
+//var allEnemies = [new Enemy, new Enemy, new Enemy, new Enemy, new Enemy, new Enemy]
+//var allEnemies = [enemy1, enemy2 , enemy3, enemy4, enemy5, enemy6];
 
 
 class Player extends Point {
