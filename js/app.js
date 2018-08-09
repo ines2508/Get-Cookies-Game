@@ -1,55 +1,55 @@
 
-
-
 class Point {
-    constructor(sprite, x, y, w, h) {
+    constructor(sprite, x, y, w, h, collision) {
         this.sprite = sprite;
         this.x = x || 0;
         this.y = y || 0;
         this.w = w || 101;
         this.h = h || 171;
+        this.collision = collision || false;
     }
-    update(dt) {
-        player.checkCollisions();
-        enemy.checkCollisions();
 
+
+    update(dt) {
+
+        this.checkCollisions();
     }
+
     render() {
 
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
+
     checkCollisions() {
 
         // extra numbers are whitespaces on the pictures
         var left = player.x + 17; 
         var right = player.x + player.w - 17;
-        var top = player.y + 63;
+        var top = player.y + 75;
         var bottom = player.y + player.h - 30; 
    
+        allEnemies.forEach(function(enemy) {
+            var rightB = enemy.x + enemy.w - 17;
+            var leftB = enemy.x + 17;
+            var bottomB = enemy.y + enemy.h - 38;
+            var topB = enemy.y + 82;
+    
+            if (left <= rightB && right >= leftB && top <= bottomB && bottom >= topB) {
+                player.collision = true;
+            return player.collision;
+            }
+        })
 
-        var rightB = allEnemies[0].x + allEnemies[0].w;
-        var leftB = allEnemies[0].x;
-        var bottomB = allEnemies[0].y + allEnemies[0].h - 30;
-        var topB = allEnemies[0].y + 77;
-
-
-        if (left <= rightB && right <= leftB && top <= bottomB && bottom >= topB) {
-            console.log("hit")
+        if (player.collision == true) {
+            player.tryAgain();
         }
-
-
-     //   console.log(player.x)
-     //   console.log(allEnemies[0].x)
-
-         
-
-      //  console.log(this.x)
     }
+
 }
 
 class Enemy extends Point {
-    constructor(x, y, w, h, sprite, rode) {
-        super(x, w, h);
+    constructor(x, y, w, h, sprite, rode, collision) {
+        super(x, w, h, collision);
         this.sprite = sprite || 'images/enemy-bug.png';
         this.y = y;
         this.rode = rode;
@@ -100,14 +100,12 @@ let enemy4 = new Enemy(undefined, undefined, undefined, undefined, undefined);
 let enemy5 = new Enemy(undefined, undefined, undefined, undefined, undefined);
 let enemy6 = new Enemy(undefined, undefined, undefined, undefined, undefined);
 
-var allEnemies = [enemy];
-//var allEnemies = [new Enemy, new Enemy, new Enemy, new Enemy, new Enemy, new Enemy]
-//var allEnemies = [enemy1, enemy2 , enemy3, enemy4, enemy5, enemy6];
+var allEnemies = [enemy1, enemy2 , enemy3, enemy4];
 
 
 class Player extends Point {
-    constructor(x, y, w, h, sprite) {
-        super(x, y, w, h);
+    constructor(x, y, w, h, sprite, collision) {
+        super(x, y, w, h, collision);
         this.sprite = sprite || 'images/char-boy.png';
     }
 
@@ -141,10 +139,15 @@ class Player extends Point {
 
             }
         }
-
     }
+
     win() {
         console.log("I won!")
+        player.reset();
+    }
+
+    tryAgain() {
+        console.log("They hit me!")
         player.reset();
     }
     reset() {
@@ -155,10 +158,6 @@ class Player extends Point {
 }
 
 let player = new Player(undefined, 201, 380);
-
-
-
-
 
 
 document.addEventListener('keyup', function(e) {
