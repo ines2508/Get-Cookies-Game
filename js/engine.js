@@ -66,6 +66,7 @@ var Engine = (function(global) {
         reset();
         lastTime = Date.now();
         main();
+    
     }
 
     /* This function is called by main (our game loop) and itself calls all
@@ -160,7 +161,8 @@ var Engine = (function(global) {
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
-        // noop
+        
+
     }
 
     /* Go ahead and load all of the images we know we're going to need to
@@ -182,4 +184,5 @@ var Engine = (function(global) {
      */
     global.ctx = ctx;
 })(this);
+
 
