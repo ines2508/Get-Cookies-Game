@@ -10,61 +10,75 @@ class Point {
         this.h = h || 171;
     }
     update(dt) {
+        player.checkCollisions();
+        enemy.checkCollisions();
 
     }
     render() {
 
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
+    checkCollisions() {
+      //  console.log(this.x)
+    }
 }
 
 class Enemy extends Point {
-    constructor(x, y, w, h, sprite, addRode, par01, par02, par03, delay) {
-        super(x, y, w, h);
+    constructor(x, y, w, h, sprite, rode) {
+        super(x, w, h);
         this.sprite = sprite || 'images/enemy-bug.png';
-        this.addRode = addRode || 0.25;
-        this.par01 = par01 || 0.5;
-        this.par02 = par02 || 25;
-        this.par03 = par03 || 1.2;
-        this.delay = delay || 505;
-
-
+        this.y = y;
+        this.rode = rode;
+        this.positionY();
+        this.generator();
+        this.positionX();
     }
+
     update(dt) {
 
-      //  this.x += (this.x * dt + this.speed) * 0.3;
-     //   this.x += (this.x * dt + this.speed) * Math.random() * 0.3;
-    //    this.x += (this.x * dt + Math.random()) * 0.3;
-     //     this.x += (this.x * dt + this.speed) / Math.random() * 0.1;
-     //     this.x += (((this.x * dt + this.addRode) / Math.random() - this.par01) / this.par02) * this.par03;
-          this.x += (((this.x * dt + this.addRode) / Math.random() - this.par01) / this.par02) * this.par03;
+        this.x += (this.x * dt + this.rode + 4.5) * this.rode * 0.75 ;
 
+        if (this.x >= 505) {
+            this.x = -101;
+            this.positionY();
+            this.generator();
+        }
+    }
 
+    positionY() {
+        var positionList = [60, 143, 226];
+        var positionGenerator = Math.floor((Math.random() * 3) + 0);
+        var position = positionList[positionGenerator];
+        this.y = position;
+    }
 
-          if (this.x >= this.delay) {
-              this.x = 0;
-              console.log(enemy1)
+    positionX() {
+        var positionList = [-101, 0, 50, 100, 150, 350];
+        var positionGenerator = Math.floor((Math.random() * 6) + 0);
+        var positionXstart = positionList[positionGenerator];
+        this.x = positionXstart;
+    }
 
-          }
-
-
+    generator() {
+        var generateX = Math.random();
+        if (generateX < 0.32) {
+            generateX = 0.32
+        }
+        this.rode = generateX;
     }
 }
 
-let enemy1 = new Enemy(undefined, 0, 60, undefined, undefined, 0.15);
-let enemy2 = new Enemy(undefined, 0, 143, undefined, undefined, 0.25, undefined, 15);
-let enemy3 = new Enemy(undefined, 0, 226, undefined, undefined, 0 , 0.8 , 5, 1.2, 800 );
-let enemy4 = new Enemy(undefined, 1, 60, undefined, undefined, 0.25, undefined, 15, 1.5, 600);
-let enemy5 = new Enemy(undefined, 0, 226, undefined, undefined, 0.25, 0.8);
-let enemy6 = new Enemy(undefined, 0, 143, undefined, undefined, 0.5, 0.8, 22, 1, 650);
+let enemy = new Enemy();
+let enemy1 = new Enemy(undefined, undefined, undefined, undefined, undefined);
+let enemy2 = new Enemy(undefined, undefined, undefined, undefined, undefined);
+let enemy3 = new Enemy(undefined, undefined, undefined, undefined, undefined);
+let enemy4 = new Enemy(undefined, undefined, undefined, undefined, undefined);
+let enemy5 = new Enemy(undefined, undefined, undefined, undefined, undefined);
+let enemy6 = new Enemy(undefined, undefined, undefined, undefined, undefined);
 
 
-
-
-
-var allEnemies = [enemy1, enemy2 , enemy3, enemy4, enemy5, enemy6];
-
-
+var allEnemies = [new Enemy, new Enemy, new Enemy, new Enemy, new Enemy, new Enemy]
+//var allEnemies = [enemy, enemy , enemy, enemy, enemy, enemy];
 
 
 class Player extends Point {
@@ -100,18 +114,23 @@ class Player extends Point {
             }
             if (this.y <= 0) {
                 player.win()
+
             }
         }
+
     }
     win() {
         console.log("I won!")
+        player.reset();
     }
-    
+    reset() {
+        this.x = 201;
+        this.y = 380;
+    }   
     
 }
 
 let player = new Player(undefined, 201, 380);
-console.log(player);
 
 
 
