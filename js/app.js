@@ -1,3 +1,4 @@
+var allEnemies = [];
 
 class Point {
 
@@ -52,26 +53,39 @@ class Point {
     tryAgain() {
         player.x = 201;
         player.y = 380;
-        console.log("They hit me!");
 
+        message2.visibility = true;
         player.collision = false;
+
+        setTimeout(function() {
+
+            message2.visibility = false;    
+
+        }, 550) 
     }
 
     // After the player won
     win() {
-        player.y = -10;
-        console.log("you won!")
+        player.y = 0;
+        message.visibility = true;
+        message.x = player.x + 6;
+        message.y = player.y + 20;
+        allEnemies = [];
 
         setTimeout(function() {
+
             player.x = 201;
             player.y = 380;
-        }, 2000)        
+            message.visibility = false;
+            allEnemies = [enemy1, enemy2 , enemy3, enemy4];
+
+        }, 2000) 
     }
 }
 
 
 class Enemy extends Point {
-    constructor(x, y, w, h, sprite, rode, collision) {
+    constructor(sprite, x, y, w, h, rode, collision) {
         super(x, w, h, collision);
         this.sprite = sprite || 'images/enemy-bug.png';
         this.y = y;
@@ -132,17 +146,16 @@ let enemy4 = new Enemy();
 let enemy5 = new Enemy();
 let enemy6 = new Enemy();
 
-var allEnemies = [enemy1, enemy2 , enemy3, enemy4, enemy5];
-
+allEnemies = [enemy1, enemy2 , enemy3, enemy4];
 
 
 class Player extends Point {
 
-    constructor(x, y, w, h, sprite, collision) {
+    constructor(sprite, x, y, w, h, collision) {
         super(w, h, collision);
+        this.sprite = sprite || 'images/char-boy.png';
         this.x = x || 201;
         this.y = y || 380;
-        this.sprite = sprite || 'images/char-boy.png';
     }
 
     // to move the player and make sure he will not get out of the screen
@@ -173,9 +186,9 @@ class Player extends Point {
             }
         }
         
-        // Check is the player win
-        if (player.y <= 5) {    
-            this.win()
+        // Check if the player win
+        if (player.y <= 5) { 
+            this.win();
         }
     }
 }
@@ -194,4 +207,18 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+class Message extends Point{
+    constructor(sprite, x, y, w, h, visibility) {
+        super(sprite, x, y, w, h);
+        this.sprite = sprite;
+        this.x = x;
+        this.y = y;
+        this.w = w || 95;
+        this.h = h || 49;
+        this.visibility = visibility || false;
+    }    
+}
+var message = new Message('images/i_won.png');
+var message2 = new Message('images/bad_bug.png', player.x + 40, player.y - 30, 92, 85);
 
