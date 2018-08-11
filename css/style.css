@@ -1,3 +1,83 @@
-body {
+
+/** Fonts **/
+
+@font-face {font-family:"Smartie CAPS";
+    src:url("../SMARC___.eot?") format("eot"),
+    url("../font/SMARC___.woff") format("woff"),
+    url("../SMARC___.ttf") format("truetype"),
+    url("../SMARC___.svg#SmartieCAPS") format("svg");
+    font-weight:normal;font-style:normal;}
+
+ @font-face {font-family:"Amydor";
+    src:url("../font/amydor.eot?") format("eot"),
+    url("../font/amydor.woff") format("woff"),
+    url("../font/amydor.ttf") format("truetype"),
+    url("../font/amydor.svg#Amydor-Regular") format("svg");
+    font-weight:normal;
+    font-style:normal;}
+
+
+*, 
+body, 
+div, 
+p, 
+img, 
+a, 
+ul, 
+li, 
+h1, 
+h2, 
+h3, 
+header, 
+main, 
+footer {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    box-sizing: border-box;
     text-align: center;
+}
+
+body,
+header,
+main,
+section,
+article,
+footer {
+    display: flex;
+    display: -webkit-flex;
+    width: 100%;
+    -webkit-flex-row: row wrap;
+    flex-flow: row wrap;
+    flex-wrap: wrap;
+}
+
+body {
+    min-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color:#1a2047;
+    background-image:
+    radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+    radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+    radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px),
+    radial-gradient(rgba(255,255,255,.4), rgba(255,255,255,.1) 2px, transparent 30px);
+    background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px; 
+    background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
+}
+.menu,
+#game {
+    width: 100%;
+    justify-content: center;
+}
+.menu {
+    margin-top: 20px;
+    margin-bottom: -35px;
+}
+
+p {
+    font-family: "Amydor";
+    letter-spacing: 0.1em;
+    color: white;
+    font-size: 2em;
 }

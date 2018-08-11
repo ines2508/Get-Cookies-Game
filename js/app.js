@@ -68,8 +68,8 @@ class Point {
     win() {
         player.y = 0;
         message.visibility = true;
-        message.x = player.x + 6;
-        message.y = player.y + 20;
+        message.x = player.x -70;
+        message.y = player.y + 40;
         allEnemies = [];
 
         setTimeout(function() {
@@ -153,7 +153,7 @@ class Player extends Point {
 
     constructor(sprite, x, y, w, h, collision) {
         super(w, h, collision);
-        this.sprite = sprite || 'images/char-boy.png';
+        this.sprite = sprite || 'images/char-horn-girl.png';
         this.x = x || 201;
         this.y = y || 380;
     }
