@@ -96,8 +96,10 @@ var Engine = (function(global) {
             enemy.update(dt);
         });
         player.update();
-        message.update();
+        message1.update();
         message2.update();
+        message3.update();
+        key.update();
 
     }
 
@@ -116,8 +118,8 @@ var Engine = (function(global) {
                 'images/stone-block.png',   // Row 1 of 3 of stone
                 'images/stone-block.png',   // Row 2 of 3 of stone
                 'images/stone-block.png',   // Row 3 of 3 of stone
-                'images/wall-block1.png',   // Row 1 of 2 of dirt block
-                'images/wall-block1.png'    // Row 2 of 2 of dirt blocks
+                'images/Wall-Block.png',   // Row 1 of 2 of dirt block
+                'images/Wall-Block.png'    // Row 2 of 2 of dirt blocks
             ],
             numRows = 6,
             numCols = 5,
@@ -159,12 +161,23 @@ var Engine = (function(global) {
         });
 
         player.render();
-        if (message.visibility) {
-            message.render();
-        }
+
+        if (message1.visibility) {
+            message1.render();
+        };
+
         if (message2.visibility) {
             message2.render();
-        }
+        };
+
+        if (message3.visibility) {
+            message3.render();
+        };
+
+        if (player.hasKey == false) {
+            key.render();
+        };
+
 
     }
 
@@ -184,11 +197,12 @@ var Engine = (function(global) {
     Resources.load([
         'images/stone-block.png',
         'images/water-block.png',
-        'images/wall-block1.png',
+        'images/Wall-Block.png',
         'images/enemy-bug.png',
         'images/char-horn-girl.png',
         'images/i_won.png',
-        'images/bad_bug.png'
+        'images/bad_bug.png',
+        'images/Key.png'
     ]);
     Resources.onReady(init);
 

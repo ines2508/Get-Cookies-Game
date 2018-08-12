@@ -20,6 +20,21 @@ class Point {
 
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
+    
+    // Generate position Y
+    positionY() {
+        var positionList = [60, 143, 226];
+        var positionGenerator = Math.floor((Math.random() * 3) + 0);
+        var position = positionList[positionGenerator];
+        this.y = position;
+    }
+
+    // Generate position X (used only once for bugs, when start)
+    positionX(list) {
+        var positionGenerator = Math.floor((Math.random() * list.length) + 0);
+        var positionXstart = list[positionGenerator];
+        this.x = positionXstart;
+    }
 
     // Checking if player was hit by the bug
     checkCollisions() {
@@ -42,10 +57,23 @@ class Point {
             }
         })
 
-        // When the player was hit
+        // When the player was hit by bug
         if (player.collision == true) {
 
             this.tryAgain();
+        }
+
+        // key
+
+        var topK = key.y + 50;
+        var bottomK = key.y + key.h - 30;
+        var leftK = key.x + 30;
+        var rightK = key.x + key.w - 30;
+
+        if (left <= rightK && right >= leftK && top <= bottomK && bottom >= topK) {
+            player.hasKey = true;
+            this.collected();
+            return player.hasKey;
         }
     }
 
@@ -64,19 +92,34 @@ class Point {
         }, 550) 
     }
 
+    collected() {
+        message3.visibility = true;
+        message3.x = player.x -70;
+        message3.y = player.y + 40;
+
+        setTimeout (function(){
+            message3.visibility = false;
+            key.x = 280;
+            key.y = 0;
+            player.hasKey = false;
+        })
+
+    }
+
     // After the player won
     win() {
         player.y = 0;
-        message.visibility = true;
-        message.x = player.x -70;
-        message.y = player.y + 40;
+        message1.visibility = true;
+        message1.x = player.x -70;
+        message1.y = player.y + 40;
         allEnemies = [];
 
         setTimeout(function() {
 
             player.x = 201;
             player.y = 380;
-            message.visibility = false;
+            message1.visibility = false;
+            player.hasKey = false;
             allEnemies = [enemy1, enemy2 , enemy3, enemy4];
 
         }, 2000) 
@@ -90,9 +133,12 @@ class Enemy extends Point {
         this.sprite = sprite || 'images/enemy-bug.png';
         this.y = y;
         this.rode = rode;
+
         this.positionY();
         this.generator();
-        this.positionX();
+        var positionList = [-101, 0, 50, 100, 150, 350];
+
+        this.positionX(positionList);
     }
 
     update(dt) {
@@ -109,21 +155,6 @@ class Enemy extends Point {
         }
     }
 
-    // Set bugs at the random track
-    positionY() {
-        var positionList = [60, 143, 226];
-        var positionGenerator = Math.floor((Math.random() * 3) + 0);
-        var position = positionList[positionGenerator];
-        this.y = position;
-    }
-
-    // Used only once at start, otherwise the player will win
-    positionX() {
-        var positionList = [-101, 0, 50, 100, 150, 350];
-        var positionGenerator = Math.floor((Math.random() * 6) + 0);
-        var positionXstart = positionList[positionGenerator];
-        this.x = positionXstart;
-    }
 
     generator() {
         var generateX = Math.random();
@@ -151,11 +182,12 @@ allEnemies = [enemy1, enemy2 , enemy3, enemy4];
 
 class Player extends Point {
 
-    constructor(sprite, x, y, w, h, collision) {
+    constructor(sprite, x, y, w, h, collision, hasKey) {
         super(w, h, collision);
         this.sprite = sprite || 'images/char-horn-girl.png';
         this.x = x || 201;
         this.y = y || 380;
+        this.hasKey = hasKey || false;
     }
 
     // to move the player and make sure he will not get out of the screen
@@ -208,7 +240,9 @@ document.addEventListener('keyup', function(e) {
     player.handleInput(allowedKeys[e.keyCode]);
 });
 
-class Message extends Point{
+
+class Message extends Point {
+
     constructor(sprite, x, y, w, h, visibility) {
         super(sprite, x, y, w, h);
         this.sprite = sprite;
@@ -219,6 +253,25 @@ class Message extends Point{
         this.visibility = visibility || false;
     }    
 }
-var message = new Message('images/i_won.png');
+var message1 = new Message('images/i_won.png');
 var message2 = new Message('images/bad_bug.png', player.x + 40, player.y - 30, 92, 85);
+var message3 = new Message('images/i_won.png');
+
+class Key extends Point {
+
+    constructor(sprite, x, y, w, h) {
+        super(sprite, x, y, w, h);
+        this.sprite = sprite || 'images/Key.png';
+
+        var positionKey = [0, 100, 200, 300, 400];
+        this.positionY();
+        this.positionX(positionKey);
+
+
+
+    }
+
+}
+
+var key = new Key();
 
