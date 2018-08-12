@@ -113,17 +113,31 @@ var Engine = (function(global) {
         /* This array holds the relative URL to the image used
          * for that particular row of the game level.
          */
+        var roof ='images/Roof-South-West.png';
+        var roof2 = 'images/Roof-South.png';
+        var roof3 = 'images/Roof-South-East.png';
+        var window = 'images/Window-Tall.png';
+        var door0 = 'images/Door-Tall-Closed.png';
+        var door1 = 'images/Wood-Block.png';
+        var doorOpen = 'images/Door-Tall-Open.png';
+
+                
+
         var rowImages = [
-                'images/water-block.png',   // Top row is water
+                'images/Brown-Block.png',   // Top row is block
+                'images/Brown-Block.png',   // Top row is block
                 'images/stone-block.png',   // Row 1 of 3 of stone
                 'images/stone-block.png',   // Row 2 of 3 of stone
                 'images/stone-block.png',   // Row 3 of 3 of stone
                 'images/Wall-Block.png',   // Row 1 of 2 of dirt block
-                'images/Wall-Block.png'    // Row 2 of 2 of dirt blocks
+            //    'images/Wall-Block.png'    // Row 2 of 2 of dirt blocks
             ],
+        //    numRows = 6,
+
             numRows = 6,
             numCols = 5,
             row, col;
+
         
         // Before drawing, clear existing canvas
         ctx.clearRect(0,0,canvas.width,canvas.height)
@@ -132,6 +146,8 @@ var Engine = (function(global) {
          * and, using the rowImages array, draw the correct image for that
          * portion of the "grid"
          */
+
+
         for (row = 0; row < numRows; row++) {
             for (col = 0; col < numCols; col++) {
                 /* The drawImage function of the canvas' context element
@@ -141,9 +157,26 @@ var Engine = (function(global) {
                  * so that we get the benefits of caching these images, since
                  * we're using them over and over.
                  */
-                ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
+
+
+               ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
+                ctx.drawImage(Resources.get(window), 101, 50, 101, 83);
+                ctx.drawImage(Resources.get(window), 3 * 101, 50, 101, 83);
+                ctx.drawImage(Resources.get(door1), 2 * 101, 145, 101, 83);
+
+                ctx.drawImage(Resources.get(door0), 2 * 101, 18, 101, 171);
+
+                ctx.drawImage(Resources.get(roof), 0, 0, 101, 83);
+                ctx.drawImage(Resources.get(roof2), 101, 0, 101, 83);
+                ctx.drawImage(Resources.get(roof2), 2 * 101, 0, 101, 83);
+                ctx.drawImage(Resources.get(roof2), 3 * 101, 0, 101, 83);
+                ctx.drawImage(Resources.get(roof3), 4 * 101, 0, 101, 83);
+
             }
+
+
         }
+
 
         renderEntities();
     }
@@ -195,8 +228,15 @@ var Engine = (function(global) {
      * all of these images are properly loaded our game will start.
      */
     Resources.load([
+        'images/Roof-South-West.png',
+        'images/Roof-South.png',
+        'images/Roof-South-East.png',
+        'images/Window-Tall.png',
+        'images/Door-Tall-Closed.png',
+        'images/Door-Tall-Open.png',
+        'images/Wood-Block.png',
         'images/stone-block.png',
-        'images/water-block.png',
+        'images/Brown-Block.png',
         'images/Wall-Block.png',
         'images/enemy-bug.png',
         'images/char-horn-girl.png',

@@ -23,7 +23,7 @@ class Point {
     
     // Generate position Y
     positionY() {
-        var positionList = [60, 143, 226];
+        var positionList = [143, 226, 309];
         var positionGenerator = Math.floor((Math.random() * 3) + 0);
         var position = positionList[positionGenerator];
         this.y = position;
@@ -36,7 +36,7 @@ class Point {
         this.x = positionXstart;
     }
 
-    // Checking if player was hit by the bug
+    // Checking if player was hit by the bug or get the key
     checkCollisions() {
 
         // extra numbers are whitespaces on the pictures
@@ -53,17 +53,23 @@ class Point {
     
             if (left <= rightB && right >= leftB && top <= bottomB && bottom >= topB) {
                 player.collision = true;
+
                 return player.collision;
             }
         })
 
         // When the player was hit by bug
         if (player.collision == true) {
+            player.hit += 1;
 
             this.tryAgain();
+
+            if (player.hit == 5) {
+                this.reset();
+            }
         }
 
-        // key
+        // collect the key
 
         var topK = key.y + 50;
         var bottomK = key.y + key.h - 30;
@@ -72,6 +78,8 @@ class Point {
 
         if (left <= rightK && right >= leftK && top <= bottomK && bottom >= topK) {
             player.hasKey = true;
+            key.x = 0;
+            key.y = 0;
             this.collected();
             return player.hasKey;
         }
@@ -84,43 +92,55 @@ class Point {
 
         message2.visibility = true;
         player.collision = false;
+        var positionKey = [100, 200, 300, 400];
+        key.positionY();
+        key.positionX(positionKey);
 
         setTimeout(function() {
 
-            message2.visibility = false;    
+            message2.visibility = false;
+            player.hit = 0;
+            player.hasKey = false;
 
-        }, 550) 
+        }, 750) 
     }
 
+    // after the player get the key
     collected() {
         message3.visibility = true;
         message3.x = player.x -70;
         message3.y = player.y + 40;
 
         setTimeout (function(){
-            message3.visibility = false;
-            key.x = 280;
-            key.y = 0;
-            player.hasKey = false;
-        })
 
+            message3.visibility = false;
+
+        }, 500)
     }
+
 
     // After the player won
     win() {
-        player.y = 0;
+        player.x = 200;
+        player.y = 65;
+
         message1.visibility = true;
         message1.x = player.x -70;
         message1.y = player.y + 40;
         allEnemies = [];
+
+        var positionKey = [100, 200, 300, 400];
+        key.positionY();
+        key.positionX(positionKey);
 
         setTimeout(function() {
 
             player.x = 201;
             player.y = 380;
             message1.visibility = false;
+            allEnemies = [enemy1, enemy2];
+            player.hit = 0;
             player.hasKey = false;
-            allEnemies = [enemy1, enemy2 , enemy3, enemy4];
 
         }, 2000) 
     }
@@ -155,7 +175,6 @@ class Enemy extends Point {
         }
     }
 
-
     generator() {
         var generateX = Math.random();
 
@@ -177,16 +196,17 @@ let enemy4 = new Enemy();
 let enemy5 = new Enemy();
 let enemy6 = new Enemy();
 
-allEnemies = [enemy1, enemy2 , enemy3, enemy4];
+allEnemies = [enemy1, enemy2];
 
 
 class Player extends Point {
 
-    constructor(sprite, x, y, w, h, collision, hasKey) {
+    constructor(sprite, x, y, w, h, collision, hit, hasKey) {
         super(w, h, collision);
         this.sprite = sprite || 'images/char-horn-girl.png';
         this.x = x || 201;
         this.y = y || 380;
+        this.hit = hit || 0;
         this.hasKey = hasKey || false;
     }
 
@@ -207,21 +227,23 @@ class Player extends Point {
 
         } else if (key == 'down') {
 
-            if (this.y >= 0 && this.y <= (ctx.canvas.height - (this.h * 1.4))) {
+            if (this.y >= 100 && this.y <= (ctx.canvas.height - (this.h * 1.4))) {
                 this.y += (this.w * 0.25);
             }
 
         } else if (key == 'up') {
 
-            if (this.y > 0 && this.y <= (ctx.canvas.height - (this.h * 0.5))) {
+            if (this.y > 111 && this.y <= (ctx.canvas.height - (this.h * 0.5))) {
                 this.y -= (this.w * 0.25);
             }
         }
         
         // Check if the player win
-        if (player.y <= 5) { 
-            this.win();
-        }
+        if (player.y <= 113 && player.hasKey == true) {
+            if (player.x >= 200 && player.x <= 240) { 
+                this.win();
+            }
+        } 
     }
 }
 
@@ -260,17 +282,16 @@ var message3 = new Message('images/i_won.png');
 class Key extends Point {
 
     constructor(sprite, x, y, w, h) {
+
         super(sprite, x, y, w, h);
         this.sprite = sprite || 'images/Key.png';
+        this.x = x;
+        this.y = y;
 
-        var positionKey = [0, 100, 200, 300, 400];
+        var positionKey = [100, 200, 300, 400];
         this.positionY();
         this.positionX(positionKey);
-
-
-
     }
-
 }
 
 var key = new Key();
