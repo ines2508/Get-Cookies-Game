@@ -27,15 +27,17 @@
         
         // Generate position Y
         positionY() {
+
             var positionList = [143, 226, 309];
-            var positionGenerator = Math.floor((Math.random() * 3) + 0);
+            var positionGenerator = Math.floor(Math.random() * positionList.length);
             var position = positionList[positionGenerator];
             this.y = position;
         }
 
         // Generate position X (used only once for bugs, when start)
         positionX(list) {
-            var positionGenerator = Math.floor((Math.random() * list.length) + 0);
+
+            var positionGenerator = Math.floor(Math.random() * list.length);
             var positionXstart = list[positionGenerator];
             this.x = positionXstart;
         }
@@ -66,11 +68,12 @@
             if (player.collision == true) {
                 player.hit += 1;
 
+                if (player.hit == 4) {
+                    console.log(player.hit)
+                }
+
                 this.tryAgain();
 
-                if (player.hit == 5) {
-                    this.reset();
-                }
             }
 
             // collect the key
@@ -81,43 +84,56 @@
             var rightK = key.x + key.w - 30;
 
             if (left <= rightK && right >= leftK && top <= bottomK && bottom >= topK) {
-                player.hasKey = true;
-                key.x = 0;
-                key.y = 0;
                 this.collected();
-                return player.hasKey;
             }
         }
 
         // After the player was hit
         tryAgain() {
+
+            player.hasKey = true;
+
             player.x = 201;
             player.y = 380;
 
-            message2.visibility = true;
+            messageText03.visibility = true;
             player.collision = false;
-            var positionKey = [100, 200, 300, 400];
-            key.positionY();
-            key.positionX(positionKey);
+            console.log(player.hit);
 
             setTimeout(function() {
 
-                message2.visibility = false;
+                var positionKey = [100, 200, 300, 400];
+                key.positionY();
+                key.positionX(positionKey);    
+                messageText03.visibility = false;
+                messageText02.visibility = true;
+
                 player.hit = 0;
-                player.hasKey = false;
+
+                setTimeout(function(){
+
+                    messageText02.visibility = false;
+                    player.hasKey = false;
+    
+                }, 1200)
 
             }, 750) 
+
+           
         }
 
         // after the player get the key
         collected() {
-            message3.visibility = true;
-            message3.x = player.x -70;
-            message3.y = player.y + 40;
+
+            key.x = -100;
+            key.y = -100;
+            player.hasKey = true;
+
+            messageText04.visibility = true;
 
             setTimeout (function(){
 
-                message3.visibility = false;
+                messageText04.visibility = false;
 
             }, 500)
         }
@@ -125,12 +141,12 @@
 
         // After the player won
         win() {
+
             player.x = 200;
             player.y = 65;
 
-            message1.visibility = true;
-            message1.x = player.x -70;
-            message1.y = player.y + 40;
+            messageText05.visibility = true;
+
             allEnemies = [];
 
             var positionKey = [100, 200, 300, 400];
@@ -141,7 +157,7 @@
 
                 player.x = 201;
                 player.y = 380;
-                message1.visibility = false;
+                messageText05.visibility = false;
                 allEnemies = [enemy1, enemy2];
                 player.hit = 0;
                 player.hasKey = false;
@@ -163,8 +179,8 @@
 
             this.positionY();
             this.generator();
-            var positionList = [-101, 0, 50, 100, 150, 350];
 
+            var positionList = [-101, 0, 50, 100, 150, 350];
             this.positionX(positionList);
         }
 
@@ -290,9 +306,9 @@
         }   
         
     }
-    var message1 = new Message('images/i_won.png');
-    var message2 = new Message('images/bad_bug.png', player.x + 40, player.y - 30, 92, 85);
-    var message3 = new Message('images/i_won.png');
+    var messageText05 = new Message('images/i_won.png');
+    var messageText03 = new Message('images/bad_bug.png', player.x + 40, player.y - 30, 92, 85);
+    var messageText04 = new Message('images/i_won.png');
 
 
 // Key - attribute to collect    
@@ -303,8 +319,8 @@
 
             super(sprite, x, y, w, h);
             this.sprite = sprite || 'images/Key.png';
-            this.x = x;
-            this.y = y;
+            this.x = x || -100;
+            this.y = y || -100;
 
             var positionKey = [100, 200, 300, 400];
             this.positionY();
@@ -321,16 +337,16 @@ class MessageText extends Point {
     constructor(text, sprite, x, y, w, h, visibility) {
         super(sprite, x, y, w, h);
         this.text = text || 'Hello,<br>This is me!';
-        this.sprite = sprite || 'images/SpeechBubble.png';
+        this.sprite = sprite || 'images/SpeechBubble01.png';
         this.x = x || 0;
         this.y = y || 0;
         this.w = w;
         this.h = h;
-        this.visibility = visibility || true;
+        this.visibility = visibility || false;
     }   
      render() {
 
-        ctx.drawImage(Resources.get(this.sprite), player.x + 80, player.y - 100);
+        ctx.drawImage(Resources.get(this.sprite), player.x - 80, player.y - 100);
 
         var fontSize = 15;
         ctx.font = fontSize + 'px Helvetica';
@@ -340,14 +356,13 @@ class MessageText extends Point {
         // Displaying text with line break
 
         var textArray = this.text.split('<br>');
-        this.y = player.y -5;
+        this.y = player.y -4;
 
         for (var i = 0; i < textArray.length; i++) {
-            ctx.fillText(textArray[i], player.x + 132, this.y);
+            ctx.fillText(textArray[i], player.x - 30, this.y);
             this.y += (fontSize + 6);
 
         }
-
     }
 
 }
@@ -355,7 +370,7 @@ var messageText01 = new MessageText('Omg!<br>Bugs are<br>everywhere!');
 var messageText02 = new MessageText('Help me!<br>I need to<br>get the key!');
 var messageText03 = new MessageText('Bug hits me!<br>and ...I lost<br>...the key!');
 var messageText04 = new MessageText('I have a key!<br>I am so<br>happy!!!');
-var messageText = new MessageText('I made it!<br>Thank you,<br>for help!');
+var messageText05 = new MessageText('I made it!<br>Thank you,<br>for help!');
 
 
 

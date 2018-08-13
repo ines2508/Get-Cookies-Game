@@ -96,11 +96,11 @@ var Engine = (function(global) {
             enemy.update(dt);
         });
         player.update();
-        message1.update();
-        message2.update();
-        message3.update();
         key.update();
-        messageText.update();
+        messageText05.update();
+        messageText03.update();
+        messageText04.update();
+        messageText02.update();
 
     }
 
@@ -164,9 +164,7 @@ var Engine = (function(global) {
                 ctx.drawImage(Resources.get(window), 101, 50, 101, 83);
                 ctx.drawImage(Resources.get(window), 3 * 101, 50, 101, 83);
                 ctx.drawImage(Resources.get(door1), 2 * 101, 145, 101, 83);
-
                 ctx.drawImage(Resources.get(door0), 2 * 101, 18, 101, 171);
-
                 ctx.drawImage(Resources.get(roof), 0, 0, 101, 83);
                 ctx.drawImage(Resources.get(roof2), 101, 0, 101, 83);
                 ctx.drawImage(Resources.get(roof2), 2 * 101, 0, 101, 83);
@@ -193,23 +191,25 @@ var Engine = (function(global) {
 
         player.render();
 
-        if (message1.visibility) {
-            message1.render();
-        };
-
-        if (message2.visibility) {
-            message2.render();
-        };
-
-        if (message3.visibility) {
-            message3.render();
-        };
-
         if (player.hasKey == false) {
             key.render();
         };
 
-        messageText.render();
+        if (messageText05.visibility) {
+            messageText05.render();
+        };
+
+        if (messageText03.visibility) {
+            messageText03.render();
+        };
+
+        if (messageText04.visibility) {
+            messageText04.render();
+        };
+
+        if (messageText02.visibility) {
+            messageText02.render();
+        };
 
     }
 
@@ -218,7 +218,6 @@ var Engine = (function(global) {
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
-        
 
     }
 
@@ -239,10 +238,8 @@ var Engine = (function(global) {
         'images/Wall-Block.png',
         'images/enemy-bug.png',
         'images/char-horn-girl.png',
-        'images/i_won.png',
-        'images/bad_bug.png',
         'images/Key.png',
-        'images/SpeechBubble.png'
+        'images/SpeechBubble01.png'
     ]);
     Resources.onReady(init);
 
