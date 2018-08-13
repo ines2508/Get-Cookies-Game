@@ -59,7 +59,7 @@
         
                 if (left <= rightB && right >= leftB && top <= bottomB && bottom >= topB) {
                     player.collision = true;
-
+                    
                     return player.collision;
                 }
             })
@@ -68,11 +68,14 @@
             if (player.collision == true) {
                 player.hit += 1;
 
-                if (player.hit == 4) {
-                    console.log(player.hit)
+                this.tryAgain();
+
+
+                if (player.hit == 5) {
+                    console.log('Ups')
+                    player.hit = 0;
                 }
 
-                this.tryAgain();
 
             }
 
@@ -91,6 +94,8 @@
         // After the player was hit
         tryAgain() {
 
+            openDoor.visibility = false;
+
             player.hasKey = true;
 
             player.x = 201;
@@ -108,7 +113,7 @@
                 messageText03.visibility = false;
                 messageText02.visibility = true;
 
-                player.hit = 0;
+           //     player.hit = 0;
 
                 setTimeout(function(){
 
@@ -128,6 +133,7 @@
             key.x = -100;
             key.y = -100;
             player.hasKey = true;
+            openDoor.visibility = true;
 
             messageText04.visibility = true;
 
@@ -155,6 +161,7 @@
 
             setTimeout(function() {
 
+                openDoor.visibility = false;
                 player.x = 201;
                 player.y = 380;
                 messageText05.visibility = false;
@@ -291,24 +298,6 @@
     });
 
 
-// Messages in th game    
-
-    class Message extends Point {
-
-        constructor(sprite, x, y, w, h, visibility) {
-            super(sprite, x, y, w, h);
-            this.sprite = sprite;
-            this.x = x;
-            this.y = y;
-            this.w = w || 95;
-            this.h = h || 49;
-            this.visibility = visibility || false;
-        }   
-        
-    }
-    var messageText05 = new Message('images/i_won.png');
-    var messageText03 = new Message('images/bad_bug.png', player.x + 40, player.y - 30, 92, 85);
-    var messageText04 = new Message('images/i_won.png');
 
 
 // Key - attribute to collect    
@@ -371,6 +360,27 @@ var messageText02 = new MessageText('Help me!<br>I need to<br>get the key!');
 var messageText03 = new MessageText('Bug hits me!<br>and ...I lost<br>...the key!');
 var messageText04 = new MessageText('I have a key!<br>I am so<br>happy!!!');
 var messageText05 = new MessageText('I made it!<br>Thank you,<br>for help!');
+
+// Open doors in th game    
+
+class Door extends Point {
+
+    constructor(sprite, x, y, w, h, visibility) {
+        super(sprite, x, y, w, h);
+        this.sprite = sprite || 'images/Ramp-South.png';
+        this.x = x || 200;
+        this.y = y || 30;
+        this.w = w;
+        this.h = h;
+        this.visibility = visibility || false;
+    }      
+}
+
+var openDoor = new Door();
+
+
+
+
 
 
 
