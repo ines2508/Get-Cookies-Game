@@ -100,6 +100,7 @@ var Engine = (function(global) {
         message2.update();
         message3.update();
         key.update();
+        messageText.update();
 
     }
 
@@ -173,10 +174,7 @@ var Engine = (function(global) {
                 ctx.drawImage(Resources.get(roof3), 4 * 101, 0, 101, 83);
 
             }
-
-
         }
-
 
         renderEntities();
     }
@@ -211,6 +209,7 @@ var Engine = (function(global) {
             key.render();
         };
 
+        messageText.render();
 
     }
 
@@ -242,7 +241,8 @@ var Engine = (function(global) {
         'images/char-horn-girl.png',
         'images/i_won.png',
         'images/bad_bug.png',
-        'images/Key.png'
+        'images/Key.png',
+        'images/SpeechBubble.png'
     ]);
     Resources.onReady(init);
 
