@@ -2,7 +2,6 @@
 
     var allEnemies = [];
 
-
 // Game common pattern    
     class Point {
 
@@ -64,23 +63,22 @@
                 }
             })
 
-            // When the player was hit by bug
+            // When the player is hit by the bug, he loses one heart
             if (player.collision == true) {
                 player.hit += 1;
+                allHearts[player.hit - 1].visibility = false;
+             
+                    this.tryAgain();
 
-                this.tryAgain();
-
-
+                // when the player is hit 5th time he loses key
                 if (player.hit == 5) {
-                    console.log('Ups')
-                    player.hit = 0;
-                }
 
-
+                    this.lostKey(); 
+                } 
             }
 
-            // collect the key
 
+            // collect the key
             var topK = key.y + 50;
             var bottomK = key.y + key.h - 30;
             var leftK = key.x + 30;
@@ -91,48 +89,36 @@
             }
         }
 
-        // After the player was hit
+        // After the player gets hit
         tryAgain() {
 
-            openDoor.visibility = false;
-
-            player.hasKey = true;
-
+            // player gets back to start postion
             player.x = 201;
             player.y = 380;
 
             messageText03.visibility = true;
+
+            // reseting collision
             player.collision = false;
-            console.log(player.hit);
 
             setTimeout(function() {
 
-                var positionKey = [100, 200, 300, 400];
-                key.positionY();
-                key.positionX(positionKey);    
                 messageText03.visibility = false;
-                messageText02.visibility = true;
 
-           //     player.hit = 0;
-
-                setTimeout(function(){
-
-                    messageText02.visibility = false;
-                    player.hasKey = false;
-    
-                }, 1200)
-
-            }, 750) 
-
-           
+            }, 750);
         }
 
-        // after the player get the key
+        // after the player collects the key
         collected() {
 
+            // the key disappears from the screen
             key.x = -100;
             key.y = -100;
-            player.hasKey = true;
+
+            // key is hidden from the view
+            player.keyInvisible = true;
+
+            // door is closed
             openDoor.visibility = true;
 
             messageText04.visibility = true;
@@ -144,32 +130,87 @@
             }, 500)
         }
 
+        // after the player gets hit 5 times, he loses the key and reset game
+
+        lostKey() {
+
+            player.keyInvisible = true;
+            openDoor.visibility = false;
+
+            setTimeout(function() {
+
+                messageText02.visibility = true;
+
+                setTimeout(function(){
+
+                    messageText02.visibility = false;
+
+                }, 1200)
+
+            }, 750) 
+
+            this.newGame();
+        }
+
+        // new Game or reset game
+
+        newGame() {
+
+            // setting up new position for the key
+            player.keyInvisible = true;
+            openDoor.visibility = false;
+
+            var positionKey = [100, 200, 300, 400];
+            key.positionY();
+            key.positionX(positionKey);  
+
+            // reseting bugs
+
+            allEnemies = [];
+            allEnemies = [enemy1, enemy2];
+
+            setTimeout(function(){
+
+                player.x = 201;
+                player.y = 380;
+    
+                messageText01.visibility = true;
+
+                // reseting key, collistion, heart rating
+                player.collision = false;
+                player.keyInvisible = false;
+                player.hit = 0;
+
+                allHearts.forEach(function(heart0){
+                    heart0.visibility = true;
+                })
+
+                setTimeout(function(){
+
+                    messageText01.visibility = false;
+
+                }, 900);
+
+            }, 1200)
+
+        }
 
         // After the player won
         win() {
 
-            player.x = 200;
-            player.y = 65;
+            // player in Granmother's home
+            player.x = 201;
+            player.y = 70;
 
             messageText05.visibility = true;
 
-            allEnemies = [];
-
-            var positionKey = [100, 200, 300, 400];
-            key.positionY();
-            key.positionX(positionKey);
-
             setTimeout(function() {
 
-                openDoor.visibility = false;
-                player.x = 201;
-                player.y = 380;
                 messageText05.visibility = false;
-                allEnemies = [enemy1, enemy2];
-                player.hit = 0;
-                player.hasKey = false;
 
-            }, 2000) 
+            }, 1200) 
+
+            this.newGame();
         }
     }
 
@@ -234,13 +275,13 @@
 
     class Player extends Point {
 
-        constructor(sprite, x, y, w, h, collision, hit, hasKey) {
+        constructor(sprite, x, y, w, h, collision, hit, keyInvisible) {
             super(w, h, collision);
             this.sprite = sprite || 'images/char-horn-girl.png';
             this.x = x || 201;
             this.y = y || 380;
             this.hit = hit || 0;
-            this.hasKey = hasKey || false;
+            this.keyInvisible = keyInvisible || false;
         }
 
         // to move the player and make sure he will not get out of the screen
@@ -272,7 +313,7 @@
             }
             
             // Check if the player win
-            if (player.y <= 113 && player.hasKey == true) {
+            if (player.y <= 113 && player.keyInvisible == true) {
                 if (player.x >= 200 && player.x <= 240) { 
                     this.win();
                 }
@@ -296,8 +337,6 @@
 
         player.handleInput(allowedKeys[e.keyCode]);
     });
-
-
 
 
 // Key - attribute to collect    
@@ -333,6 +372,7 @@ class MessageText extends Point {
         this.h = h;
         this.visibility = visibility || false;
     }   
+
      render() {
 
         ctx.drawImage(Resources.get(this.sprite), player.x - 80, player.y - 100);
@@ -342,27 +382,28 @@ class MessageText extends Point {
         ctx.fillStyle = '#1a2047';
         ctx.textAlign = 'center';
 
-        // Displaying text with line break
-
+        // Displaying text with linebreaks
+        
         var textArray = this.text.split('<br>');
         this.y = player.y -4;
 
         for (var i = 0; i < textArray.length; i++) {
             ctx.fillText(textArray[i], player.x - 30, this.y);
             this.y += (fontSize + 6);
-
         }
     }
-
 }
+
 var messageText01 = new MessageText('Omg!<br>Bugs are<br>everywhere!');
-var messageText02 = new MessageText('Help me!<br>I need to<br>get the key!');
-var messageText03 = new MessageText('Bug hits me!<br>and ...I lost<br>...the key!');
+var messageText02 = new MessageText('Help me!<br>I lost<br>get the key!');
+var messageText03 = new MessageText('Bug hits me!<br>it hurts<br>...cry!');
 var messageText04 = new MessageText('I have a key!<br>I am so<br>happy!!!');
 var messageText05 = new MessageText('I made it!<br>Thank you,<br>for help!');
 
-// Open doors in th game    
+var messageList = [messageText01, messageText02, messageText03, messageText04, messageText05]
 
+
+// Open doors in th game    
 class Door extends Point {
 
     constructor(sprite, x, y, w, h, visibility) {
@@ -378,6 +419,26 @@ class Door extends Point {
 
 var openDoor = new Door();
 
+// Hearts rating
+class Heart extends Point {
+    constructor(x, visibility, sprite, y, w, h) {
+        super(sprite, x, y, w, h);
+        this.visibility = visibility || true;
+        this.sprite = sprite || 'images/Heart.png';
+        this.x = x || 0;
+        this.y = y || 0;
+        this.w = w;
+        this.h = h;
+    }
+}
+
+var heart = new Heart(0);
+var heart1 = new Heart(100);
+var heart2 = new Heart(200);
+var heart3 = new Heart(300);
+var heart4 = new Heart(400);
+
+var allHearts = [heart, heart1, heart2, heart3, heart4];
 
 
 

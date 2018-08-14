@@ -94,15 +94,23 @@ var Engine = (function(global) {
     function updateEntities(dt) {
 
         openDoor.update();
+
+        allHearts.forEach(function(heart0) {
+            heart0.update(dt);
+        });
+
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
+
         player.update();
+
         key.update();
-        messageText05.update();
-        messageText03.update();
-        messageText04.update();
-        messageText02.update();
+
+        messageList.forEach(function(message) {
+            message.update();
+        });
+
 
     }
 
@@ -188,6 +196,13 @@ var Engine = (function(global) {
          * the render function you have defined.
          */
 
+     //   heart.render();
+        allHearts.forEach(function(heart0) {
+            if (heart0.visibility) {
+                heart0.render();
+            }
+        });
+
         if (openDoor.visibility) {
             openDoor.render();
         }
@@ -198,25 +213,18 @@ var Engine = (function(global) {
 
         player.render();
 
-        if (player.hasKey == false) {
+        if (player.keyInvisible == false) {
             key.render();
         };
 
-        if (messageText05.visibility) {
-            messageText05.render();
-        };
+        messageList.forEach(function(message) {
+            if (message.visibility) {
+                message.render();
+            }
+        });
 
-        if (messageText03.visibility) {
-            messageText03.render();
-        };
 
-        if (messageText04.visibility) {
-            messageText04.render();
-        };
 
-        if (messageText02.visibility) {
-            messageText02.render();
-        };
 
     }
 
@@ -247,6 +255,7 @@ var Engine = (function(global) {
         'images/enemy-bug.png',
         'images/char-horn-girl.png',
         'images/Key.png',
+        'images/Heart.png',
         'images/SpeechBubble01.png',
 
     ]);
