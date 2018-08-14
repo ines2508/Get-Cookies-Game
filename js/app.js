@@ -66,7 +66,7 @@
             // When the player is hit by the bug, he loses one heart
             if (player.collision == true) {
                 player.hit += 1;
-                allHearts[player.hit - 1].visibility = false;
+                allHearts[allHearts.length - player.hit].visibility = false;
              
                     this.tryAgain();
 
@@ -158,7 +158,6 @@
 
             // setting up new position for the key
             player.keyInvisible = true;
-            openDoor.visibility = false;
 
             var positionKey = [100, 200, 300, 400];
             key.positionY();
@@ -180,6 +179,8 @@
                 player.collision = false;
                 player.keyInvisible = false;
                 player.hit = 0;
+                openDoor.visibility = false;
+
 
                 allHearts.forEach(function(heart0){
                     heart0.visibility = true;
@@ -200,7 +201,7 @@
 
             // player in Granmother's home
             player.x = 201;
-            player.y = 70;
+            player.y = 65;
 
             messageText05.visibility = true;
 
@@ -383,7 +384,7 @@ class MessageText extends Point {
         ctx.textAlign = 'center';
 
         // Displaying text with linebreaks
-        
+
         var textArray = this.text.split('<br>');
         this.y = player.y -4;
 
@@ -395,8 +396,8 @@ class MessageText extends Point {
 }
 
 var messageText01 = new MessageText('Omg!<br>Bugs are<br>everywhere!');
-var messageText02 = new MessageText('Help me!<br>I lost<br>get the key!');
-var messageText03 = new MessageText('Bug hits me!<br>it hurts<br>...cry!');
+var messageText02 = new MessageText("Help me!<br>I've lost<br>get the key!");
+var messageText03 = new MessageText("Bug's bit me!<br>it hurts<br>...cry!");
 var messageText04 = new MessageText('I have a key!<br>I am so<br>happy!!!');
 var messageText05 = new MessageText('I made it!<br>Thank you,<br>for help!');
 

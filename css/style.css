@@ -16,6 +16,13 @@
     font-weight:normal;
     font-style:normal;}
 
+@font-face {font-family:"Tooney Loons";
+    src:url("../font/toony_loons.eot?") format("eot"),
+    url("../font/toony_loons.woff") format("woff"),
+    url("../font/toony_loons.ttf") format("truetype"),
+    url("../font/toony_loons.svg#TooneyLoons") format("svg");
+    font-weight:normal;
+    font-style:normal;}
 
 *, 
 body, 
@@ -28,7 +35,8 @@ li,
 h1, 
 h2, 
 h3, 
-header, 
+header,
+section, 
 main, 
 footer {
     margin: 0;
@@ -65,19 +73,98 @@ body {
     background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px; 
     background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
 }
-.menu,
+.container,
 #game {
     width: 100%;
     justify-content: center;
 }
-.menu {
-    margin-top: 20px;
-    margin-bottom: -35px;
+
+.container {
+    max-width: 1024px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 30px 30px 0 30px;
+
 }
 
-.game-title {
+.game-title, .start-button {
     font-family: "Amydor";
     letter-spacing: 0.1em;
     color: white;
     font-size: 2em;
+    justify-content: center;
+}
+
+.game-roles {
+    width: 80%;
+    justify-content: center;
+    line-height: 150%;
+    padding: 2.5em 0 0.5em 0;
+    color: white;
+    font-family: "Tooney Loons";
+    letter-spacing: 0.1em;
+}
+
+.bigger-words {
+    font-size: 120%;
+}
+.player-name-container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.player-name {
+    background-image: url(../images/SpeechBubble.png);
+    height: 171px;
+    width: 101px;
+    margin: -85px 0 -10px 0;
+    padding: 75px 0 0 15px;
+    text-align: left;
+    color: #1a2047;
+    order:10;
+
+}
+
+.player-image {
+    width: 101px;
+    margin: 0 0 -10px 0;
+    order: 1;
+}
+
+
+.text-roles {
+    text-align: justify;
+
+}
+.text-help {
+    font-size: 150%;
+    padding: 1.5em 0 1.5em 0;
+    text-align: center;
+}
+
+
+.start-button {
+    width: 80%;
+    padding: 1em 1.2em 0.8em 1.2em;
+    background-color: white;
+    color: #1a2047;
+    border-radius: 0.5em;
+}
+
+.start-button:hover {
+    background-color: #b7beeb;
+    cursor: pointer;
+    color: white;
+    transform: matrix(1, 0, 0, 1, 1, 1);
+    -ms-transform: matrix(1, 0, 0, 1, 1, 1);
+    -webkit-transform: matrix(1, 0, 0, 1, 1, 1);
+   
+}
+.text-arrow-key {
+    color: white;
+    font-family: "Tooney Loons";
+    letter-spacing: 0.1em;
+    padding: 0.5em 0 1em 0;
+
 }
