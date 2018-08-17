@@ -3,33 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Cross the Rode</title>
+    <title>Get the cookies</title>
     <meta name="description" content="Game for PC">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <section class="container">
-        <p class="game-title">Cross the Rode</p>
-        <div class="game-roles">
-            <div class="player-name-container">
-            <p class="player-name">Hi!<br>My name<br>is <span class="bigger-words">Sofie</span>!</p>
-         
-            <img class="player-image" src="images/char-horn-girl.png" alt="Player image">
-            </div>
-            <p class="text-roles">I'm a <span class="bigger-words">small girl</span>. I need to get to <span class="bigger-words">my Grandmother's home</span>.<br>...but <span class="bigger-words">I cannot</span> do this <span class="bigger-words">by myself</span> because... <br>there are <span class="bigger-words">bugs</span> everywhere, ...they <span class="bigger-words">bite</span> and I'm soooo afraid of them.
-           I've also <span class="bigger-words">lost the key</span> to open my Grandmother's home. :-( Without the key, I will not <span class="bigger-words">get inside</span>.
-            </p>
-            <p class="text-help">Will you help me? You are sooooo smart and clever :-) 
-            </p>
+        <p class="game-title">Get the cookies</p>
+
+            <div class="rules-container">
+
+                <div class="player-speach">
+
+                    <p class="player-speach-01">
+                        Hi! My name is <span class="bigger-words">Gretel</span>! 
+                        I'm a <span class="bigger-words">small girl and... I love cookies!</span> 
+                        To have some, I need to get to <span class="bigger-words">Witch's house</span> ...but  
+                        <span class="bigger-words">I cannot</span> do this <span class="bigger-words">by myself... :-(</span>
+                    </p>
+
+                    <p class="player-speach-02 hide">
+                        Because there are <span class="bigger-words">bugs!!! </span><span class="bigger-words">Everywhere</span>!<br>
+                        These nasty <span class="bigger-words">bugs bite</span> and I'm soooo afraid of them.
+                        I also have to find <span class="bigger-words">the key</span> to <span class="bigger-words">open the door</span>. 
+                    </p>
+
+                    <p class="player-speach-03 hide">
+                        Will you help me?!!<br>Pleaseeeee...<br>You are sooooo smart and clever :-)
+                    </p>
+
+                    <p class="text-arrow-key hide">
+                        P.S. Use the arrow's keys to help me cross the road. To reset the Game I need to touch the Rock.
+                    </p>
             
+                    <p class="start-button hide">Start<br>the game</p>
+                    <p class="next next01">NEXT-></p>
+            </div>
+
+            <div class="hide bugs">
+                <ul>
+                    <li>
+                        <img class="bug-image1 bug-run-lower" src="images/enemy-bug-left.png" alt="Bug image">
+                    </li>
+                    <li>
+                        <img class="bug-image1 bug-run-down" src="images/enemy-bug-left.png" alt="Bug image">
+                    </li>
+                    <li>
+                        <img class="bug-image1 bug-run-down01" src="images/enemy-bug-left.png" alt="Bug image">
+                    </li>
+                    <li>
+                        <img class="bug-image1 bug-run" src="images/enemy-bug-left.png" alt="Bug image">
+                    </li>
+                    <li>
+                        <img class="bug-image1 bug-run-up" src="images/enemy-bug-left.png" alt="Bug image">
+                    </li>
+                    <li>
+                        <img class="bug-image1 bug-run-down01" src="images/enemy-bug-left.png" alt="Bug image">
+                    </li>
+                    <li>
+                        <img class="bug-image1 bug-run" src="images/enemy-bug-left.png" alt="Bug image">
+                    </li>
+                    <li>
+                        <img class="bug-image1 bug-run-up" src="images/enemy-bug-left.png" alt="Bug image">
+                    </li>
+                    <li>
+                        <img class="bug-image1 bug-run-lower" src="images/enemy-bug-left.png" alt="Bug image">
+                    </li>
+                    <li>
+                        <img class="bug-image1 bug-run-down" src="images/enemy-bug-left.png" alt="Bug image">
+                    </li>
+                    </ul>
+                    
+                    <img class="bug-image1 bug-run-up" src="images/enemy-bug-left.png" alt="Bug image">
+                    <img class="bug-image1 bug-run-down01" src="images/enemy-bug-left.png" alt="Bug image">
+            </div>
+
+            <img class="player-image" src="images/char-horn-girl.png" alt="Player image">
+
         </div>
-        <p class="start-button">Start the game</p>
-        <p class="text-arrow-key">P.S. Use the arrow's keys to help me cross the rode.
-            </p>
 
     </section>
-    <div id="game"></div>
+    <div id="game" class="hide"></div>
+    <script src="js/main.js"></script>
     <script src="js/resources.js"></script>
     <script src="js/app.js"></script>
     <script src="js/engine.js"></script>

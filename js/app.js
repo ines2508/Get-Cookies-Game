@@ -2,7 +2,7 @@
 
     var allEnemies = [];
 
-// Game common pattern    
+// --------------------------- Common patterns ----------------------------    
     class Point {
 
         constructor(sprite, x, y, w, h, collision) {
@@ -41,7 +41,7 @@
             this.x = positionXstart;
         }
 
-        // Checking if player was hit by the bug or get the key
+        // Checking if player was hit by the bug, get the key, touch Reset Button
         checkCollisions() {
 
             // extra numbers are whitespaces on the pictures
@@ -49,6 +49,8 @@
             var right = player.x + player.w - 17;
             var top = player.y + 82;
             var bottom = player.y + player.h - 30; 
+
+            // check if player was bite by bug
     
             allEnemies.forEach(function(enemy) {
                 var rightB = enemy.x + enemy.w - 17;
@@ -63,22 +65,24 @@
                 }
             })
 
-            // When the player is hit by the bug, he loses one heart
+            // When the player is bit by the bug, he loses one heart
             if (player.collision == true) {
                 player.hit += 1;
-                allHearts[allHearts.length - player.hit].visibility = false;
+                allHearts[player.hit - 1].visibility = false;
              
                     this.tryAgain();
 
-                // when the player is hit 5th time he loses key
+                // when the player is bit 5th time he loses key
                 if (player.hit == 5) {
+
+                    allEnemies = [];
 
                     this.lostKey(); 
                 } 
             }
 
-
             // collect the key
+
             var topK = key.y + 50;
             var bottomK = key.y + key.h - 30;
             var leftK = key.x + 30;
@@ -87,10 +91,25 @@
             if (left <= rightK && right >= leftK && top <= bottomK && bottom >= topK) {
                 this.collected();
             }
+
+            // reset Button
+
+            var topR = resetButton.y + 70;
+            var bottomR = resetButton.y + resetButton.h - 30;
+            var leftR = resetButton.x + 30;
+            var rightR = resetButton.x + resetButton.w - 30;
+
+            if (left <= rightR && right >= leftR && top <= bottomR && bottom >= topR) {
+                this.newGame();
+            }
         }
 
-        // After the player gets hit
+        // After the player gets bit by bug
+
         tryAgain() {
+
+            // reseting collision
+            player.collision = false;
 
             // player gets back to start postion
             player.x = 201;
@@ -98,17 +117,15 @@
 
             messageText03.visibility = true;
 
-            // reseting collision
-            player.collision = false;
-
             setTimeout(function() {
 
                 messageText03.visibility = false;
 
-            }, 750);
+            }, 1200);
         }
 
         // after the player collects the key
+
         collected() {
 
             // the key disappears from the screen
@@ -127,14 +144,20 @@
 
                 messageText04.visibility = false;
 
-            }, 500)
+            }, 1200)
         }
 
-        // after the player gets hit 5 times, he loses the key and reset game
+        // after the player gets bit 5 times, he loses the key and reset game
 
         lostKey() {
 
+            allEnemies = [];
+
             player.keyInvisible = true;
+
+            key.x = -100;
+            key.y = -100;
+
             openDoor.visibility = false;
 
             setTimeout(function() {
@@ -147,7 +170,7 @@
 
                 }, 1200)
 
-            }, 750) 
+            }, 1200) 
 
             this.newGame();
         }
@@ -156,50 +179,48 @@
 
         newGame() {
 
-            // setting up new position for the key
-            player.keyInvisible = true;
-
-            var positionKey = [100, 200, 300, 400];
-            key.positionY();
-            key.positionX(positionKey);  
-
             // reseting bugs
 
             allEnemies = [];
-            allEnemies = [enemy1, enemy2];
+            player.keyInvisible = true;
 
             setTimeout(function(){
 
-                player.x = 201;
-                player.y = 380;
+                var positionKey = [100, 200, 300, 400];
+                key.positionY();
+                key.positionX(positionKey);  
     
-                messageText01.visibility = true;
-
                 // reseting key, collistion, heart rating
                 player.collision = false;
-                player.keyInvisible = false;
                 player.hit = 0;
                 openDoor.visibility = false;
-
 
                 allHearts.forEach(function(heart0){
                     heart0.visibility = true;
                 })
 
+                player.x = 201;
+                player.y = 380;
+
+                allEnemies = [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6, enemy7];
+
+                messageText01.visibility = true;
+
                 setTimeout(function(){
+                    player.keyInvisible = false;
 
                     messageText01.visibility = false;
 
-                }, 900);
+                }, 2100);
 
-            }, 1200)
-
+            }, 1400)
         }
 
         // After the player won
+
         win() {
 
-            // player in Granmother's home
+            // player in Witch's house
             player.x = 201;
             player.y = 65;
 
@@ -213,11 +234,11 @@
 
             this.newGame();
         }
-    }
+    };
 
+// ----------------------- Characters -----------------------------
 
-
-// Enemy - bad character of the game
+// --- Bug
 
     class Enemy extends Point {
         constructor(sprite, x, y, w, h, rode, collision) {
@@ -251,15 +272,13 @@
             var generateX = Math.random();
 
             // Make sure the bug's speed is not too low
-            if (generateX < 0.32) {
-                generateX = 0.32
+            if (generateX < 0.34) {
+                generateX = 0.34
             }
             this.rode = generateX;
         }
     }
 
-
-// List of bad characters
 
     let enemy = new Enemy();
     let enemy1 = new Enemy();
@@ -268,11 +287,13 @@
     let enemy4 = new Enemy();
     let enemy5 = new Enemy();
     let enemy6 = new Enemy();
+    let enemy7 = new Enemy();
 
-    allEnemies = [enemy1, enemy2];
+
+    allEnemies = [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6, enemy7];
 
 
-// Player - good character of the game (the user)    
+// --- Player (the user)    
 
     class Player extends Point {
 
@@ -302,7 +323,7 @@
 
             } else if (key == 'down') {
 
-                if (this.y >= 100 && this.y <= (ctx.canvas.height - (this.h * 1.4))) {
+                if (this.y >= 100 && this.y <= (ctx.canvas.height - (this.h * 1.1))) {
                     this.y += (this.w * 0.25);
                 }
 
@@ -340,7 +361,7 @@
     });
 
 
-// Key - attribute to collect    
+// --- Key - attribute to collect    
 
     class Key extends Point {
 
@@ -359,7 +380,7 @@
 
     var key = new Key();
 
-// text render
+// --- Messeges
 
 class MessageText extends Point {
 
@@ -379,9 +400,9 @@ class MessageText extends Point {
         ctx.drawImage(Resources.get(this.sprite), player.x - 80, player.y - 100);
 
         var fontSize = 15;
-        ctx.font = fontSize + 'px Helvetica';
+        ctx.font = fontSize + 'px Tooney Loons';
         ctx.fillStyle = '#1a2047';
-        ctx.textAlign = 'center';
+        ctx.textAlign = 'left';
 
         // Displaying text with linebreaks
 
@@ -389,7 +410,7 @@ class MessageText extends Point {
         this.y = player.y -4;
 
         for (var i = 0; i < textArray.length; i++) {
-            ctx.fillText(textArray[i], player.x - 30, this.y);
+            ctx.fillText(textArray[i], player.x - 68, this.y);
             this.y += (fontSize + 6);
         }
     }
@@ -399,47 +420,65 @@ var messageText01 = new MessageText('Omg!<br>Bugs are<br>everywhere!');
 var messageText02 = new MessageText("Help me!<br>I've lost<br>get the key!");
 var messageText03 = new MessageText("Bug's bit me!<br>it hurts<br>...cry!");
 var messageText04 = new MessageText('I have a key!<br>I am so<br>happy!!!');
-var messageText05 = new MessageText('I made it!<br>Thank you,<br>for help!');
+var messageText05 = new MessageText("I made it!<br>Let's have <br>cookies!");
 
 var messageList = [messageText01, messageText02, messageText03, messageText04, messageText05]
 
 
-// Open doors in th game    
+// --- Open doors in th game    
+
 class Door extends Point {
 
-    constructor(sprite, x, y, w, h, visibility) {
+    constructor(sprite, visibility, x, y, w, h) {
         super(sprite, x, y, w, h);
-        this.sprite = sprite || 'images/Ramp-South.png';
-        this.x = x || 200;
-        this.y = y || 30;
+        this.sprite = sprite || 'images/Door-close01.png';
+        this.x = x || 201;
+        this.y = y || 83;
         this.w = w;
         this.h = h;
-        this.visibility = visibility || false;
+        this.visibility = visibility;
     }      
 }
 
-var openDoor = new Door();
+var openDoor = new Door('images/Door-open03.png', false);
+var closeDoor = new Door();
 
-// Hearts rating
+
+// --- Hearts rating
+
 class Heart extends Point {
     constructor(x, visibility, sprite, y, w, h) {
         super(sprite, x, y, w, h);
         this.visibility = visibility || true;
-        this.sprite = sprite || 'images/Heart.png';
+        this.sprite = sprite || 'images/Heart_small.png';
         this.x = x || 0;
-        this.y = y || 0;
+        this.y = y || 560;
         this.w = w;
         this.h = h;
     }
 }
 
-var heart = new Heart(0);
-var heart1 = new Heart(100);
-var heart2 = new Heart(200);
-var heart3 = new Heart(300);
-var heart4 = new Heart(400);
+var heart = new Heart(275);
+var heart1 = new Heart(320);
+var heart2 = new Heart(365);
+var heart3 = new Heart(410);
+var heart4 = new Heart(455);
 
 var allHearts = [heart, heart1, heart2, heart3, heart4];
+
+// --- Reset Button
+
+class Reset extends Point {
+    constructor(sprite, x, y, w, h) {
+        super(w, h);
+        this.x = x || -10;
+        this.y = y || 480;
+        this.sprite = sprite || 'images/Rock.png';
+    }
+};
+
+var resetButton = new Reset();
+
 
 
 

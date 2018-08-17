@@ -65,7 +65,6 @@ var Engine = (function(global) {
      * game loop.
      */
     function init() {
-        reset();
         lastTime = Date.now();
         main();
     
@@ -93,6 +92,7 @@ var Engine = (function(global) {
      */
     function updateEntities(dt) {
 
+        closeDoor.update();
         openDoor.update();
 
         allHearts.forEach(function(heart0) {
@@ -111,6 +111,8 @@ var Engine = (function(global) {
             message.update();
         });
 
+        resetButton.update();
+
 
     }
 
@@ -128,7 +130,6 @@ var Engine = (function(global) {
         var roof2 = 'images/Roof-South.png';
         var roof3 = 'images/Roof-South-East.png';
         var window = 'images/Window-Tall.png';
-        var door0 = 'images/Door-Tall-Closed.png';
         var door1 = 'images/Wood-Block.png';
         var doorOpen = 'images/Door-Tall-Open.png';
 
@@ -141,9 +142,7 @@ var Engine = (function(global) {
                 'images/stone-block.png',   // Row 2 of 3 of stone
                 'images/stone-block.png',   // Row 3 of 3 of stone
                 'images/Wall-Block.png',   // Row 1 of 2 of dirt block
-            //    'images/Wall-Block.png'    // Row 2 of 2 of dirt blocks
             ],
-        //    numRows = 6,
 
             numRows = 6,
             numCols = 5,
@@ -174,7 +173,6 @@ var Engine = (function(global) {
                 ctx.drawImage(Resources.get(window), 101, 50, 101, 83);
                 ctx.drawImage(Resources.get(window), 3 * 101, 50, 101, 83);
                 ctx.drawImage(Resources.get(door1), 2 * 101, 145, 101, 83);
-                ctx.drawImage(Resources.get(door0), 2 * 101, 18, 101, 171);
                 ctx.drawImage(Resources.get(roof), 0, 0, 101, 83);
                 ctx.drawImage(Resources.get(roof2), 101, 0, 101, 83);
                 ctx.drawImage(Resources.get(roof2), 2 * 101, 0, 101, 83);
@@ -206,6 +204,9 @@ var Engine = (function(global) {
         if (openDoor.visibility) {
             openDoor.render();
         }
+        if (openDoor.visibility == false) {
+           closeDoor.render();
+        }
 
         allEnemies.forEach(function(enemy) {
             enemy.render();
@@ -223,8 +224,7 @@ var Engine = (function(global) {
             }
         });
 
-
-
+        resetButton.render();
 
     }
 
@@ -245,18 +245,19 @@ var Engine = (function(global) {
         'images/Roof-South.png',
         'images/Roof-South-East.png',
         'images/Window-Tall.png',
-        'images/Door-Tall-Closed.png',
-        'images/Door-Tall-Open.png',
+        'images/Door-open03.png',
+        'images/Door-close01.png',
         'images/Wood-Block.png',
         'images/stone-block.png',
         'images/Brown-Block.png',
         'images/Wall-Block.png',
-        'images/Ramp-South.png',
+        'images/open_door.png',
         'images/enemy-bug.png',
         'images/char-horn-girl.png',
         'images/Key.png',
-        'images/Heart.png',
+        'images/Heart_small.png',
         'images/SpeechBubble01.png',
+        'images/Rock.png',
 
     ]);
     Resources.onReady(init);
