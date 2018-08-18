@@ -202,7 +202,7 @@
                 player.x = 201;
                 player.y = 380;
 
-                allEnemies = [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6, enemy7];
+                allEnemies = [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6];
 
                 messageText01.visibility = true;
 
@@ -290,7 +290,7 @@
     let enemy7 = new Enemy();
 
 
-    allEnemies = [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6, enemy7];
+    allEnemies = [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6];
 
 
 // --- Player (the user)    
