@@ -217,7 +217,7 @@
                 player.x = 201;
                 player.y = 380;
 
-                allEnemies = [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6];
+                allEnemies = [enemy, enemy1, enemy2, enemy3, enemy4, enemy5, enemy6, enemy7];
 
                 // Message shows up
                 messageText01.visibility = true;
@@ -268,7 +268,7 @@
             this.positionY();
             this.generator();
 
-            let positionList = [-101, 0, 50, 100, 150, 350];
+            let positionList = [-101, 50, 150, 300];
             this.positionX(positionList);
         }
 
@@ -277,8 +277,8 @@
             let generateX = Math.random();
         
             // Make sure the bug's speed is not too low
-            if (generateX < 0.32) {
-                generateX = 0.32
+            if (generateX < 0.12) {
+                generateX = 0.12
             }
 
             this.rode = generateX;
@@ -307,12 +307,13 @@
     let enemy5 = new Enemy();
     let enemy6 = new Enemy();
     let enemy7 = new Enemy();
+    let enemy8 = new Enemy();
 
-    let allEnemies = [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6];
+
+    let allEnemies = [enemy, enemy1, enemy2, enemy3, enemy4, enemy5, enemy6, enemy7, enemy8];
 
 
-// PLAYER    
-
+    // PLAYER
     class Player extends Vector {
 
         constructor(sprite, x, y, w, h, touchVector, hit, keyInvisible) {
@@ -495,4 +496,3 @@
     };
 
     let resetButton = new Reset();
-

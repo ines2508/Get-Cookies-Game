@@ -19,7 +19,7 @@ var playerImage = document.querySelector(".player-image");
 function readGameRules01() {
 
     // Removing the Rule 01
-
+    playerImage.classList.remove("player-start");
     playerSpeach.classList.remove("showUp");
     playerSpeach.classList.add("showDown");
     playerImage.classList.add("showDown");
@@ -67,7 +67,7 @@ function readGameRules01() {
                 playerSpeach.classList.remove("hide");
                 playerSpeach.classList.add("showUp");
 
-            }, 950)
+            }, 1000)
 
         }, 950);
 
@@ -132,32 +132,20 @@ function readGameRules01() {
                 // Removing Screen 05 - Start Button
 
                 playerSpeach.classList.remove("showUp");
-                playerSpeach.classList.add("showDown");
+                rulesSection.classList.add("showDown");
+                body.classList.add("showDown");
 
                 setTimeout(function(){
 
-                    playerSpeach.classList.remove("showDown");
-                    body.classList.add("showDown");
-                    body.classList.remove("sky");    
+                    rulesSection.classList.add("hide"); 
 
-                    setTimeout(function(){
+                    // Screen 06 - Showing the Game
+                    body.classList.add("showUp");
+                    gameCanvas.classList.remove("hide");
+                    gameCanvas.classList.add("showUp");
+                    body.classList.remove("sky");   
 
-                        // Screen 06 - showing the Game
-
-                        body.classList.add("showUp");
-                        body.classList.add("b-background");
-                        body.classList.add("center"); 
-
-                        gameRules.classList.add("hide");
-                        rulesSection.classList.add("hide");
-    
-                        gameCanvas.classList.remove("hide");
-                        gameCanvas.classList.add("showUp");
-
-                    },950)
-
-                },1000)
-
+                },950)
             }
             
             startButton.addEventListener("click", renderAll)

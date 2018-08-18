@@ -30,6 +30,7 @@ var Engine = (function(global) {
 
     gameContainer.appendChild(canvas);
 
+
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
      */
@@ -67,7 +68,6 @@ var Engine = (function(global) {
     function init() {
         lastTime = Date.now();
         main();
-    
     }
 
     /* This function is called by main (our game loop) and itself calls all
@@ -112,7 +112,6 @@ var Engine = (function(global) {
         });
 
         resetButton.update();
-
     }
 
     /* This function initially draws the "game level", it will then call
@@ -125,7 +124,7 @@ var Engine = (function(global) {
         /* This array holds the relative URL to the image used
          * for that particular row of the game level.
          */
-        var roof ='images/Roof-South-West.png';
+        var roof = 'images/Roof-South-West.png';
         var roof2 = 'images/Roof-South.png';
         var roof3 = 'images/Roof-South-East.png';
         var window = 'images/Window-Tall.png';
@@ -144,7 +143,6 @@ var Engine = (function(global) {
             numCols = 5,
             row, col;
 
-        
         // Before drawing, clear existing canvas
         ctx.clearRect(0,0,canvas.width,canvas.height)
 
@@ -152,7 +150,6 @@ var Engine = (function(global) {
          * and, using the rowImages array, draw the correct image for that
          * portion of the "grid"
          */
-
 
         for (row = 0; row < numRows; row++) {
             for (col = 0; col < numCols; col++) {
@@ -164,8 +161,7 @@ var Engine = (function(global) {
                  * we're using them over and over.
                  */
 
-
-               ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
+                ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
                 ctx.drawImage(Resources.get(window), 101, 50, 101, 83);
                 ctx.drawImage(Resources.get(window), 3 * 101, 50, 101, 83);
                 ctx.drawImage(Resources.get(door1), 2 * 101, 145, 101, 83);
@@ -174,7 +170,6 @@ var Engine = (function(global) {
                 ctx.drawImage(Resources.get(roof2), 2 * 101, 0, 101, 83);
                 ctx.drawImage(Resources.get(roof2), 3 * 101, 0, 101, 83);
                 ctx.drawImage(Resources.get(roof3), 4 * 101, 0, 101, 83);
-
             }
         }
 
@@ -190,7 +185,6 @@ var Engine = (function(global) {
          * the render function you have defined.
          */
 
-     //   heart.render();
         allHearts.forEach(function(heart0) {
             if (heart0.visibility) {
                 heart0.render();
@@ -222,13 +216,13 @@ var Engine = (function(global) {
         });
 
         resetButton.render();
-
     }
 
     /* Go ahead and load all of the images we know we're going to need to
      * draw our game level. Then set init as the callback method, so that when
      * all of these images are properly loaded our game will start.
      */
+
     Resources.load([
         'images/Roof-South-West.png',
         'images/Roof-South.png',
@@ -248,6 +242,7 @@ var Engine = (function(global) {
         'images/Rock.png',
 
     ]);
+
     Resources.onReady(init);
 
     /* Assign the canvas' context object to the global variable (the window
@@ -255,6 +250,7 @@ var Engine = (function(global) {
      * from within their app.js files.
      */
     global.ctx = ctx;
+    
 })(this);
 
 
