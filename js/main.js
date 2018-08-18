@@ -14,133 +14,145 @@ var next = document.querySelector(".next.next1");
 var bugs = document.querySelector(".bugs");
 var playerImage = document.querySelector(".player-image");
 
+// Screen 02 with Bugs animation
 
 function readGameRules01() {
 
-    playerSpeach.classList.remove("speaking");
-    playerSpeach.classList.add("stop-talking");
-    playerImage.classList.add("stop-talking");
+    // Removing the Rule 01
 
+    playerSpeach.classList.remove("showUp");
+    playerSpeach.classList.add("showDown");
+    playerImage.classList.add("showDown");
 
     setTimeout(function(){
+
         playerSpeach.classList.add("hide");
-        playerSpeach.classList.remove("stop-talking");
+        playerSpeach.classList.remove("showDown");
 
-        playerImage.classList.remove("stop-talking");
-        playerImage.classList.add("speaking");
+        // Adding animation with bugs
+
+        playerImage.classList.remove("showDown");
+        playerImage.classList.add("showUp");
         bugs.classList.remove("hide");
-
-        bugs.classList.add("speaking");
+        bugs.classList.add("showUp");
         bugs.classList.add("show");
         playerImage.classList.add("player-run");
 
-
         setTimeout(function(){
-            playerImage.classList.remove("speaking");
 
-              // wait till the animation ends
-        setTimeout(function(){
-            bugs.classList.add("hide");
-            bugs.classList.remove("show");
-            playerImage.classList.remove("player-run");
-            playerImage.classList.add("speaking");
-    
-            next.removeEventListener("click", readGameRules01);
-    
-            rule01.classList.add("hide");
-            next.classList.remove("next1");
-         
-            rule02.forEach(function(rule){
-                rule.classList.remove("hide");
-            })
+            playerImage.classList.remove("showUp");
 
-            next.classList.add("next2");
+            setTimeout(function(){
 
-            playerSpeach.classList.remove("hide");
-            playerSpeach.classList.add("speaking");
+                // Removing animation with bugs
 
+                bugs.classList.add("hide");
+                bugs.classList.remove("show");
+                playerImage.classList.remove("player-run");
 
-        }, 950)
-    
+                // Updating to Rule 02
+
+                next.removeEventListener("click", readGameRules01);
+                next.classList.remove("next1");
+                next.classList.add("next2");
+        
+                rule01.classList.add("hide");
+                rule02.forEach(function(rule){
+                    rule.classList.remove("hide");
+                })
+
+                // Screen 03 - Showing Rule 02
+
+                playerImage.classList.add("showUp");
+                playerSpeach.classList.remove("hide");
+                playerSpeach.classList.add("showUp");
+
+            }, 950)
 
         }, 950);
-    
-    
-      
-    
 
-    },950)
+    },950) // waiting till the animation finishes
 
 
    function readGameRules02() {
 
-        playerSpeach.classList.remove("speaking");
-        playerSpeach.classList.add("stop-talking");
+        // Removing Screen 03 - Rule 02
+
+        playerSpeach.classList.remove("showUp");
+        playerSpeach.classList.add("showDown");
 
         setTimeout(function(){
 
+            // Updating to Rule 03
+
             next.removeEventListener("click", readGameRules02);
+            next.classList.remove("next2");
+            next.classList.add("next3");
 
             rule02.forEach(function(rule){
                 rule.classList.add("hide");
             })
-
-            next.classList.remove("next2");
-            next.classList.add("next3");
-    
             rule03.classList.remove("hide");
             rule03a.classList.remove("hide");
 
-            playerSpeach.classList.remove("stop-talking");
-            playerSpeach.classList.add("speaking");
+            // Screen 04 - showing Rule 03
 
+            playerSpeach.classList.remove("showDown");
+            playerSpeach.classList.add("showUp");
     
         },950)
 
 
         function readGameRules03() { 
 
-            playerSpeach.classList.remove("speaking");
-            playerSpeach.classList.add("stop-talking");
+            // Removing Screen 04 - Rule 03
+
+            playerSpeach.classList.remove("showUp");
+            playerSpeach.classList.add("showDown");
     
             setTimeout(function(){
 
                 next.removeEventListener("click", readGameRules03);
+                next.classList.add("hide");
+
                 rule03.classList.add("hide");
                 rule03a.classList.add("hide");
-                next.classList.add("hide");
+
+                // Screen 05 - Showing Start Button
+
                 startButton.classList.remove("hide");
-
-                playerSpeach.classList.remove("stop-talking");
-                playerSpeach.classList.add("speaking");
-
+                playerSpeach.classList.remove("showDown");
+                playerSpeach.classList.add("showUp");
 
             },950)
 
 
             function renderAll() {
 
-                playerSpeach.classList.remove("speaking");
-                playerSpeach.classList.add("stop-talking");
+                // Removing Screen 05 - Start Button
+
+                playerSpeach.classList.remove("showUp");
+                playerSpeach.classList.add("showDown");
 
                 setTimeout(function(){
 
-                    playerSpeach.classList.remove("stop-talking");
-
-                    body.classList.add("stop-talking");
-                    body.classList.remove("sky");
+                    playerSpeach.classList.remove("showDown");
+                    body.classList.add("showDown");
+                    body.classList.remove("sky");    
 
                     setTimeout(function(){
-                        body.classList.add("speaking");
+
+                        // Screen 06 - showing the Game
+
+                        body.classList.add("showUp");
                         body.classList.add("b-background");
-                        body.classList.add("center");  
+                        body.classList.add("center"); 
+
                         gameRules.classList.add("hide");
                         rulesSection.classList.add("hide");
-
-                        
-                        gameCanvas.classList.remove("hide");
-                        gameCanvas.classList.add("speaking");
     
+                        gameCanvas.classList.remove("hide");
+                        gameCanvas.classList.add("showUp");
 
                     },950)
 

@@ -76,7 +76,7 @@ var Engine = (function(global) {
      * same space, for instance when your character should die), you may find
      * the need to add an additional function call here. For now, we've left
      * it commented out - you may or may not want to implement this
-     * functionality this way (you could just implement collision detection
+     * functionality this way (you could just implement vectorTouch detection
      * on the entities themselves within your app.js file).
      */
     function update(dt) {
@@ -113,7 +113,6 @@ var Engine = (function(global) {
 
         resetButton.update();
 
-
     }
 
     /* This function initially draws the "game level", it will then call
@@ -131,9 +130,6 @@ var Engine = (function(global) {
         var roof3 = 'images/Roof-South-East.png';
         var window = 'images/Window-Tall.png';
         var door1 = 'images/Wood-Block.png';
-        var doorOpen = 'images/Door-Tall-Open.png';
-
-                
 
         var rowImages = [
                 'images/Brown-Block.png',   // Top row is block
@@ -203,10 +199,11 @@ var Engine = (function(global) {
 
         if (openDoor.visibility) {
             openDoor.render();
-        }
+        };
+
         if (openDoor.visibility == false) {
            closeDoor.render();
-        }
+        };
 
         allEnemies.forEach(function(enemy) {
             enemy.render();
@@ -228,14 +225,6 @@ var Engine = (function(global) {
 
     }
 
-    /* This function does nothing but it could have been a good place to
-     * handle game reset states - maybe a new game menu or a game over screen
-     * those sorts of things. It's only called once by the init() method.
-     */
-    function reset() {
-
-    }
-
     /* Go ahead and load all of the images we know we're going to need to
      * draw our game level. Then set init as the callback method, so that when
      * all of these images are properly loaded our game will start.
@@ -251,11 +240,10 @@ var Engine = (function(global) {
         'images/stone-block.png',
         'images/Brown-Block.png',
         'images/Wall-Block.png',
-        'images/open_door.png',
         'images/enemy-bug.png',
         'images/char-horn-girl.png',
         'images/Key.png',
-        'images/Heart_small.png',
+        'images/Heart-small.png',
         'images/SpeechBubble01.png',
         'images/Rock.png',
 
