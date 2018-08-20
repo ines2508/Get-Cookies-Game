@@ -92,8 +92,8 @@ var Engine = (function(global) {
      */
     function updateEntities(dt) {
 
-        closeDoor.update();
-        openDoor.update();
+        closeDoor.update(dt);
+        openDoor.update(dt);
 
         allHearts.forEach(function(heart0) {
             heart0.update(dt);
@@ -103,15 +103,17 @@ var Engine = (function(global) {
             enemy.update(dt);
         });
 
-        player.update();
+        player.update(dt);
 
-        key.update();
+        key.update(dt);
 
         messageList.forEach(function(message) {
-            message.update();
+            message.update(dt);
         });
 
-        resetButton.update();
+        resetButton.update(dt);
+
+        cookie.update(dt);
     }
 
     /* This function initially draws the "game level", it will then call
@@ -129,6 +131,7 @@ var Engine = (function(global) {
         var roof3 = 'images/Roof-South-East.png';
         var window = 'images/Window-Tall.png';
         var door1 = 'images/Wood-Block.png';
+        var spiderweb =  'images/SpiderNet.png';
 
         var rowImages = [
                 'images/Brown-Block.png',   // Top row is block
@@ -165,11 +168,13 @@ var Engine = (function(global) {
                 ctx.drawImage(Resources.get(window), 101, 50, 101, 83);
                 ctx.drawImage(Resources.get(window), 3 * 101, 50, 101, 83);
                 ctx.drawImage(Resources.get(door1), 2 * 101, 145, 101, 83);
+                ctx.drawImage(Resources.get(spiderweb), -10, 65, 101, 83);
                 ctx.drawImage(Resources.get(roof), 0, 0, 101, 83);
                 ctx.drawImage(Resources.get(roof2), 101, 0, 101, 83);
                 ctx.drawImage(Resources.get(roof2), 2 * 101, 0, 101, 83);
                 ctx.drawImage(Resources.get(roof2), 3 * 101, 0, 101, 83);
                 ctx.drawImage(Resources.get(roof3), 4 * 101, 0, 101, 83);
+
             }
         }
 
@@ -216,6 +221,11 @@ var Engine = (function(global) {
         });
 
         resetButton.render();
+
+        if (cookie.visibility == true) {
+
+            cookie.render();
+        }
     }
 
     /* Go ahead and load all of the images we know we're going to need to
@@ -240,6 +250,8 @@ var Engine = (function(global) {
         'images/Heart-small.png',
         'images/SpeechBubble01.png',
         'images/Rock.png',
+        'images/Cookie.png',
+        'images/SpiderNet.png'
 
     ]);
 

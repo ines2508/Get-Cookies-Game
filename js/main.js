@@ -3,7 +3,6 @@
 var body = document.querySelector("body");
 var startButton = document.querySelector(".start-button");
 var gameCanvas = document.querySelector("#game");
-var gameRules = document.querySelector(".rules-container");
 var playerSpeach = document.querySelector(".player-speach")
 var rulesSection = document.querySelector(".container");
 var rule01 = document.querySelector(".player-speach-01");
@@ -13,6 +12,7 @@ var rule03a = document.querySelector(".text-arrow-key");
 var next = document.querySelector(".next.next1");
 var bugs = document.querySelector(".bugs");
 var playerImage = document.querySelector(".player-image");
+var cookie = document.querySelector(".cookie-image");
 
 // Screen 02 with Bugs animation
 
@@ -27,6 +27,7 @@ function readGameRules01() {
     setTimeout(function(){
 
         playerSpeach.classList.add("hide");
+        cookie.classList.add("hide");
         playerSpeach.classList.remove("showDown");
 
         // Adding animation with bugs
@@ -45,9 +46,8 @@ function readGameRules01() {
             setTimeout(function(){
 
                 // Removing animation with bugs
-
-                bugs.classList.add("hide");
                 bugs.classList.remove("show");
+                bugs.classList.add("hide");
                 playerImage.classList.remove("player-run");
 
                 // Updating to Rule 02
@@ -67,7 +67,7 @@ function readGameRules01() {
                 playerSpeach.classList.remove("hide");
                 playerSpeach.classList.add("showUp");
 
-            }, 1000)
+            }, 950)
 
         }, 950);
 

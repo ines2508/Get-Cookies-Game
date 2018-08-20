@@ -865,7 +865,8 @@ section {
 body {
     background:#1a2047;
     align-items: center;
-    justify-content: center;  
+    justify-content: center;
+    height: 100vh;  
 }
 
 .sky {
@@ -1096,6 +1097,15 @@ body {
 }
 
 
+/* --------------------- Cookie image ------------------ */
+
+.cookie-image {
+  width: 40px;
+  height: 68px;
+  order: 30;
+  margin: 25px 0 0 -455px;
+}
+
 /* ---------------------- Bugs image -------------------- */
 
 .bugs.show {
@@ -1224,7 +1234,7 @@ body {
 
 /* -------------------- Media ------------------ */
 
-@media (max-width: 350px) and (orientation: portrait) {
+@media all and (max-width: 350px) and (orientation: portrait) {
 
     .player-speach-01 {
         font-size: 1.05em;

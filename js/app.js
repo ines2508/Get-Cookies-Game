@@ -217,7 +217,9 @@
                 player.x = 201;
                 player.y = 380;
 
-                allEnemies = [enemy, enemy1, enemy2, enemy3, enemy4, enemy5, enemy6, enemy7];
+                allEnemies = [enemy1, enemy2, enemy3, enemy4, enemy5];
+
+                // enemy6, enemy7
 
                 // Message shows up
                 messageText01.visibility = true;
@@ -229,7 +231,7 @@
 
                 }, 2100);
 
-            }, 1400)
+            }, 2200)
         }
 
         // After Player won
@@ -238,6 +240,7 @@
             // Player is in Witch's house
             player.x = 201;
             player.y = 65;
+            cookie.visibility = true;
 
             // Message shows up
             messageText05.visibility = true;
@@ -245,8 +248,10 @@
             setTimeout(function() {
 
                 messageText05.visibility = false;
+                cookie.visibility = false;
 
-            }, 1200) 
+
+            }, 2000) 
 
             // Resetting Game
             this.newGame();
@@ -268,7 +273,7 @@
             this.positionY();
             this.generator();
 
-            let positionList = [-101, 50, 150, 300];
+            let positionList = [-101, 100, 250, 320, 400];
             this.positionX(positionList);
         }
 
@@ -277,9 +282,9 @@
             let generateX = Math.random();
         
             // Make sure the bug's speed is not too low
-            if (generateX < 0.12) {
-                generateX = 0.12
-            }
+            if (generateX < 0.20) {
+                generateX = 0.35
+            };
 
             this.rode = generateX;
         }
@@ -296,10 +301,8 @@
                 this.generator();
             }
         }
-
     }
 
-    let enemy = new Enemy();
     let enemy1 = new Enemy();
     let enemy2 = new Enemy();
     let enemy3 = new Enemy();
@@ -310,7 +313,8 @@
     let enemy8 = new Enemy();
 
 
-    let allEnemies = [enemy, enemy1, enemy2, enemy3, enemy4, enemy5, enemy6, enemy7, enemy8];
+    let allEnemies = [enemy1, enemy2, enemy3, enemy4, enemy5];
+    // enemy6, enemy7, enemy8
 
 
     // PLAYER
@@ -496,3 +500,19 @@
     };
 
     let resetButton = new Reset();
+
+// COOKIE
+
+    class Cookie extends Vector {
+        constructor(visibility, sprite, x, y, w, h) {
+            super(x, y);
+            this.sprite = sprite || 'images/Cookie.png';
+            this.x = x || 230;
+            this.y =  y || 184;
+            this.w = w || 40;
+            this.h = h || 68;
+            this.visibility = visibility || false;
+        }
+    }
+
+    let cookie = new Cookie();
