@@ -438,10 +438,10 @@
     }
 
     let messageText01 = new MessageText('Omg!<br>Bugs are<br>everywhere!');
-    let messageText02 = new MessageText("Help me!<br>I've lost<br>get the key!");
+    let messageText02 = new MessageText("Help me!<br>I've lost<br> the key!");
     let messageText03 = new MessageText("Bug's bit me!<br>it hurts<br>...cry!");
     let messageText04 = new MessageText('I have a key!<br>I am so<br>happy!!!');
-    let messageText05 = new MessageText("I made it!<br>Let's have <br>cookies!");
+    let messageText05 = new MessageText("I've made it!<br>Let's have <br>cookies!");
 
     let messageList = [messageText01, messageText02, messageText03, messageText04, messageText05]
 
